@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="
+background: rgb(240, 242, 245);
+margin-top: 100px;
+">
+    <div style="
+    text-align: center;
+    background: rgb(255, 255, 255);
+    width: 32%;
+    margin-left: 37%;
+">
+        <input type="text" placeholder="Name" id="name" style="font-size: 30px; font-weight: bold" /><br /><br />
+        <input type="text" placeholder="Email" id="email" style="font-size: 30px; font-weight: bold" /><br /><br />
+
+        <label id="Gender" style="font-size: 27px; font-weight: bold">Gender :&nbsp;
+            <input type="radio" name="gender" id="male" value="male" />
+            <label for="male">Male</label>
+            <input type="radio" name="gender" id="female" value="female" />
+            <label for="female">Female</label>
+            <input type="radio" name="gender" id="Other" value="Other" />
+            <label for="Other">Other</label>
+
+        </label>
+        <br />
+        <br />
+
+        <input type="text" placeholder="Balance" id="balance" style="font-size: 30px; font-weight: bold" /><br /><br />
+        <input type="text" placeholder="Account Number" id="account_no"
+            style="font-size: 30px; font-weight: bold" /><br /><br />
+        <input type="text" placeholder="Account Type" id="accounttype"
+            style="font-size: 30px; font-weight: bold" /><br /><br />
+        <input type="password" placeholder="Password" id="password" style="font-size: 30px; font-weight: bold" /><br />
+        <br />
+        <button onclick="checkdata()"
+            style="font-size: 30px;font-weight: bold;background-color: #119f16; cursor: pointer;">
+            Register
+        </button>
+    </div>
+
+</body>
+<script>
+    function checkdata() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let male = document.getElementById("male");
+        let female = document.getElementById("female");
+        let Other = document.getElementById("Other");
+
+        let gender = "";
+        if (male.checked) {
+            gender = male.value;
+        } else if (female.checked) {
+            gender = female.value;
+        }
+        else if (Other.checked) {
+            gender = Other.value;
+        }
+        let balance = document.getElementById("balance").value;
+        let account_no = document.getElementById("account_no").value;
+        let accounttype = document.getElementById("accounttype").value;
+        let password = document.getElementById("password").value;
+
+        let Check = {
+            name: name,
+            gender: gender,
+            balance: parseInt(balance),
+            account_no: parseInt(account_no),
+            accounttype: accounttype,
+            email: email,
+            password: password,
+        };
+
+        fetch(
+            " http://videhjaiswal.pythonanywhere.com/customer/customer_api/customers/register",
+            {
+                method: "POST",
+                body: JSON.stringify(Check),
+            }
+        )
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+            .then((details) => {
+                console.log(details);
+            })
+            .catch((err) => {
+                console.log("Error ", err);
+            });
+    }
+</script>
+
+</html>
